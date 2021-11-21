@@ -1,0 +1,17 @@
+syntax = 'proto3';
+
+service Pharmacy {
+  rpc List(Void) returns (PharmacyList) {}
+}
+
+// Entities
+message Void {}
+
+message PharmacyItem {
+  string name = 1;
+}
+
+// Responses
+message PharmacyList {
+  repeated PharmacyItem list = 1;
+}
