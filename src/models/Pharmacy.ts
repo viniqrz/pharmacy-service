@@ -30,6 +30,6 @@ export class Pharmacy {
   @Column()
   finishDate: Date;
 
-  @OneToOne(() => Address, (address) => address.pharmacy)
+  @OneToOne(() => Address, (address) => address.pharmacy, { cascade: true })
   address: Address;
 }
