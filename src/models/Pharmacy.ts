@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  Column,
+  OneToOne,
+} from 'typeorm';
+
 import { Address } from './Address';
 
 @Entity()
@@ -31,5 +38,6 @@ export class Pharmacy {
   finishDate: Date;
 
   @OneToOne(() => Address, (address) => address.pharmacy, { cascade: true })
+  @JoinColumn()
   address: Address;
 }

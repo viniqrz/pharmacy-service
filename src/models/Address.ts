@@ -25,6 +25,5 @@ export class Address {
   cep: string;
 
   @OneToOne(() => Pharmacy, (pharmacy) => pharmacy.address)
-  @JoinColumn()
   pharmacy: Pharmacy;
 }

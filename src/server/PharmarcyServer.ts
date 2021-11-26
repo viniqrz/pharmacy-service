@@ -1,26 +1,40 @@
 import * as grpc from '@grpc/grpc-js';
+import { getCustomRepository } from 'typeorm';
 import { IPharmacyServer } from '../../proto/pharmacy_grpc_pb';
 import { Void, PharmacyList, PharmacyItem } from '../../proto/pharmacy_pb';
+import { PharmacyRepository } from '../repositories/PharmacyRepository';
+import { ListPharmaciesUseCase } from '../useCases/ListPharmaciesUseCase';
 
 const db = [{ name: 'pague menos' }, { name: 'chico' }];
 
 export class PharmacyServer implements IPharmacyServer {
   [name: string]: grpc.UntypedHandleCall;
 
-  list(
+  async list(
     _: grpc.ServerUnaryCall<Void, PharmacyList>,
     callback: grpc.sendUnaryData<PharmacyList>
-  ): void {
-    const response = new PharmacyList();
+  ) {
+    try {
+      const response = new PharmacyList();
 
-    db.forEach((i) => {
-      const item = new PharmacyItem();
+      const pharmacyRepository = getCustomRepository(PharmacyRepository);
+      const listPharmaciesUseCase = new ListPharmaciesUseCase(
+        pharmacyRepository
+      );
 
-      item.setName(i.name);
+      const pharmacies = await listPharmaciesUseCase.execute();
 
-      response.addList(item);
-    });
+      pharmacies.forEach((i) => {
+        const item = new PharmacyItem();
 
-    callback(null, response);
+        item.setName(i.name);
+
+        response.addList(item);
+      });
+
+      callback(null, response);
+    } catch (err) {
+      callback(err.message, null);
+    }
   }
 }

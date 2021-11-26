@@ -5,4 +5,6 @@ export interface IPharmacyRepository {
   findById(id: number): Promise<Pharmacy>;
   findByName(name: string): Promise<Pharmacy[]>;
   deleteById(id: number): Promise<Pharmacy>;
+  find(): Promise<Pharmacy[]>;
+  remove(pharmacy: Pharmacy): Promise<Pharmacy>;
 }

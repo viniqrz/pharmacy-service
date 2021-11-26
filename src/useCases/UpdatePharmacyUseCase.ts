@@ -3,7 +3,7 @@ import { PartialPharmacyDto } from '../@types/dtos/PhamarcyDto';
 import { IPharmacyRepository } from '../@types/repositories/IPharmacyRepository';
 import { Pharmacy } from '../models/Pharmacy';
 import { AddressRepository } from '../repositories/AddressRepository';
-import { UpdateAddressUseCase } from './updateAddressUseCase';
+import { UpdateAddressUseCase } from './UpdateAddressUseCase';
 
 export class UpdatePharmacyUseCase {
   constructor(private pharmacyRepository: IPharmacyRepository) {}
